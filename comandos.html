@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>RandomBot - Comandos</title>
+
+<link rel="icon" href="https://cdn.discordapp.com/emojis/1416607460201857168.png?v=1" type="image/png">
+<meta property="og:title" content="Yalmil.com" />
+<meta property="og:description" content="Página principal de RandomBot" />
+<meta property="og:image" content="https://cdn.discordapp.com/attachments/1355008732576088204/1402309070014124102/Screenshot_20250804-221210.png?ex=68937197&is=68922017&hm=1fa6f462304b2b8cf8a0875053730f988d725d114fbf2648fcb87ee1b67b6a76&" />
+<meta property="og:url" content="https://yalmil.github.io/Yalmil.com/" />
+<meta property="og:type" content="website" />
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+*{box-sizing:border-box;margin:0}
+body{font-family:'Poppins',sans-serif;display:flex;flex-direction:column;min-height:100vh;transition:.4s;scroll-behavior:smooth}
+@keyframes f{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* VERDE */
+@media(prefers-color-scheme:dark){
+  body{background:linear-gradient(135deg,#001d0f,#003d23);color:#c8ffe1}
+  header,footer{background:#002818;color:#7affbf}
+  header{border-bottom:2px solid #7affbf}
+  header h1{color:#7affbf}
+  section h2{color:#7affbf}
+  .box{background:rgba(0,60,30,.25);border:2px solid #7affbf;color:#c8ffe1}
+  .btn{background:#0bbf63;color:white}
+}
+@media(prefers-color-scheme:light){
+  body{background:linear-gradient(135deg,#ebfff4,#c8ffe1);color:#084d2e}
+  header,footer{background:#d6fbe9;color:#0b7d45}
+  header{border-bottom:2px solid #0b7d45}
+  header h1{color:#0b7d45}
+  section h2{color:#0b7d45}
+  .box{background:rgba(220,250,235,.7);border:2px solid #0b7d45;color:#084d2e}
+  .btn{background:#11cc77;color:white}
+}
+
+/* Layout */
+header{text-align:center;padding:28px;animation:f .35s ease both}
+main{flex:1;display:flex;flex-direction:column;gap:80px;padding:40px 16px;animation:f .5s ease both}
+section{text-align:center;max-width:900px;margin:auto}
+
+.btns{margin-top:22px;display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+.btn{padding:12px 18px;border-radius:12px;border:none;font-weight:600;cursor:pointer;transition:.2s}
+.btn:hover{opacity:.8}
+
+/* loading animation */
+.loading{margin:40px auto;width:90px;height:90px;border-radius:50%;border:8px solid transparent;border-top:8px solid currentColor;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* características */
+.features{display:flex;flex-direction:column;gap:22px;margin-top:40px}
+.box{padding:20px;border-radius:16px;text-align:left;animation:f .4s ease both}
+.box img{width:100%;border-radius:10px;margin-top:10px}
+.box h3{margin-bottom:6px}
+</style>
+
+</head>
+<body>
+
+<header>
+  <h1>Comandos de RandomBot</h1>
+</header>
+
+<main>
+
+  <!-- FEATURES -->
+  <section id="features">
+    <h2>Características</h2>
+
+    <div class="features">
+
+      <!-- EJEMPLO editable -->
+      <div class="box">
+        <h3>!añadir-nivel</h3>
+        <p>Edita el nivel de algún usuario (solo admins)</p>
+      </div>
+
+      <div class="box">
+        <h3>!leaderboard</h3>
+        <p>Muestra la lista de usuarios con más niveles</p>
+      </div>
+
+            <div class="box">
+        <h3>!nivel @usuario</h3>
+        <p>Muestra tu nivel o el de un usuario</p>
+      </div>
+
+      <div class="box">
+        <h3>!leaderboard</h3>
+        <p>Muestra la lista de usuarios con más niveles</p>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>©RandomBot</p>
+</footer>
+
+</body>
+
+</html>
+
