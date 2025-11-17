@@ -1,1 +1,65 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Redirigiendo a Discord</title>
 
+  <link rel="icon" href="https://cdn.discordapp.com/emojis/1416607460201857168.png?v=1" type="image/png">
+  <meta property="og:title" content="Yalmil.com" />
+  <meta property="og:description" content="Invita al bot RandomBot a tu servidor con este enlace de autorización" />
+  <meta property="og:image" content="https://cdn.discordapp.com/attachments/1355008732576088204/1402309070014124102/Screenshot_20250804-221210.png?ex=68937197&is=68922017&hm=1fa6f462304b2b8cf8a0875053730f988d725d114fbf2648fcb87ee1b67b6a76&" />
+  <meta property="og:url" content="https://yalmil.github.io/Yalmil.com/" />
+  <meta property="og:type" content="website" />
+
+  <!-- CSS solicitado por el usuario (incluir siempre) -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+    *{box-sizing:border-box;margin:0}
+    body{font-family:'Poppins',sans-serif;display:flex;flex-direction:column;min-height:100vh;transition:.4s;align-items:center;justify-content:center;background:linear-gradient(135deg,#330a00,#662000);color:#ffd8a6;padding:24px}
+    @keyframes f{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+    header,footer{background:#4d1a00;color:#ff8c00;padding:12px;border-radius:10px}
+    header{border-bottom:2px solid #ff8c00;text-align:center;margin-bottom:18px}
+    header h1{color:#ff8c00;font-size:20px}
+    main{animation:f .35s ease-out}
+    .card{background:rgba(60,20,0,.2);border:2px solid #ff8c00;color:#ffd8a6;padding:18px;border-radius:12px;max-width:560px;text-align:center;box-shadow:0 6px 24px rgba(0,0,0,.2)}
+    a.button{display:inline-block;margin-top:12px;padding:10px 16px;border-radius:10px;border:2px solid #ffd8a6;text-decoration:none;font-weight:600}
+    small{display:block;margin-top:10px;opacity:.9}
+    @media(prefers-color-scheme:dark){
+      body{background:linear-gradient(135deg,#0a0a0a,#1a001f);color:#e5ccff}
+      header,footer{background:#15001f;color:#c084fc}
+      header{border-bottom:2px solid #c084fc}
+      header h1{color:#c084fc}
+      main h2{color:#c084fc}
+      .card{background:rgba(40,0,60,.25);border:2px solid #c084fc;color:#e5ccff}
+      a.button{border-color:#e5ccff}
+    }
+  </style>
+
+  <!-- Fallback meta refresh -->
+  <meta http-equiv="refresh" content="1;url=https://discord.com/oauth2/authorize?client_id=1403115564196696175&permissions=8&response_type=code&redirect_uri=https%3A%2F%2Fyalmil.github.io%2FRandomBot&integration_type=0&scope=identify+guilds+bot+messages.read+applications.commands">
+  <script>
+    // Redirección inmediata con JavaScript (mejor compatibilidad)
+    (function(){
+      const url = "https://discord.com/oauth2/authorize?client_id=1403115564196696175&permissions=8&response_type=code&redirect_uri=https%3A%2F%2Fyalmil.github.io%2FRandomBot&integration_type=0&scope=identify+guilds+bot+messages.read+applications.commands";
+      // Intentar reemplazar la historia para que el usuario no pueda volver a esta página con el back
+      window.location.replace(url);
+    })();
+  </script>
+</head>
+<body>
+  <header>
+    <h1>Redirigiendo a Discord</h1>
+  </header>
+
+  <main class="card" role="main">
+    <p>Serás redirigido para autorizar el bot RandomBot en Discord</p>
+    <a class="button" href="https://discord.com/oauth2/authorize?client_id=1403115564196696175&permissions=8&response_type=code&redirect_uri=https%3A%2F%2Fyalmil.github.io%2FRandomBot&integration_type=0&scope=identify+guilds+bot+messages.read+applications.commands">Si no redirige, pulsa aquí</a>
+    <small>Si llegas desde una página o extensión que bloquea redirecciones, usa el botón anterior</small>
+  </main>
+
+  <footer style="margin-top:18px;">
+    <small>Enlace de invitación de Discord</small>
+  </footer>
+</body>
+</html>
