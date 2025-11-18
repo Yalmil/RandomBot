@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Login - RandomBot</title>
+
+<link rel="icon" href="https://cdn.discordapp.com/emojis/1416607460201857168.png?v=1" type="image/png">
+<meta property="og:title" content="Yalmil.com" />
+<meta property="og:description" content="Login de RandomBot" />
+<meta property="og:image" content="https://cdn.discordapp.com/attachments/1355008732576088204/1402309070014124102/Screenshot_20250804-221210.png?ex=68937197&is=68922017&hm=1fa6f462304b2b8cf8a0875053730f988d725d114fbf2648fcb87ee1b67b6a76&" />
+<meta property="og:url" content="https://yalmil.github.io/Yalmil.com/" />
+<meta property="og:type" content="website" />
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+*{box-sizing:border-box;margin:0}
+body{font-family:'Poppins',sans-serif;display:flex;flex-direction:column;min-height:100vh;transition:.4s;justify-content:center;align-items:center;text-align:center;padding:20px}
+
+@media(prefers-color-scheme:dark){
+  body{background:linear-gradient(135deg,#001d0f,#003d23);color:#c8ffe1}
+  .btn{background:#0bbf63;color:white}
+}
+@media(prefers-color-scheme:light){
+  body{background:linear-gradient(135deg,#ebfff4,#c8ffe1);color:#084d2e}
+  .btn{background:#11cc77;color:white}
+}
+
+.btn{
+  padding:14px 20px;
+  border-radius:12px;
+  text-decoration:none;
+  font-weight:600;
+  display:inline-block;
+  margin-top:25px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Iniciar sesión con Discord</h1>
+<p>Accede a tu Dashboard de RandomBot</p>
+
+<a id="discordLogin" class="btn">Login con Discord</a>
+
+<script>
+// CONFIGURA ESTO
+const CLIENT_ID = "1403115564196696175";  
+const REDIRECT_URI = "https://yalmil.github.io/Yalmil.com/login.html"; 
+const SCOPE = "identify";
+
+// CLICK → REDIRIGE A DISCORD
+document.getElementById("discordLogin").onclick = () => {
+  const url =
+    `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}` +
+    `&redirect_uri=${encodeURIComponent(REDIRECT_URI)}` +
+    `&response_type=token&scope=${encodeURIComponent(SCOPE)}`;
+
+  window.location.href = url;
+};
+
+// SI YA VOLVIÓ DE DISCORD, OBTIENE EL TOKEN
+if (window.location.hash.includes("access_token")) {
+  const hash = new URLSearchParams(window.location.hash.substring(1));
+  const token = hash.get("access_token");
+
+  localStorage.setItem("discord_token", token);
+
+  // Redirige a tu dashboard real (cuando la tengas)
+  window.location.href = "dashboard.html";
+}
+</script>
+
+</body>
+</html>
