@@ -9,7 +9,7 @@
 <link rel="icon" href="https://cdn.discordapp.com/emojis/1416607460201857168.png?v=1" type="image/png">
 <meta property="og:title" content="Yalmil.com" />
 <meta property="og:description" content="Dashboard de RandomBot" />
-<meta property="og:image" content="https://cdn.discordapp.com/attachments/1355008732576088204/1402309070014124102/Screenshot_20250804-221210.png?ex=68937197&is=68922017&hm=1fa6f462304b2b8cf8a0875053730f988d725d114fbf2648fcb87ee1b67b6a76&" />
+<meta property="og:image" content="https://cdn.discordapp.com/attachments/1355008732576088204/1402309070014124102/Screenshot_20250804-221210.png" />
 <meta property="og:url" content="https://yalmil.github.io/Yalmil.com/" />
 <meta property="og:type" content="website" />
 
@@ -27,10 +27,12 @@ body{
 @media(prefers-color-scheme:dark){
   body{background:linear-gradient(135deg,#001d0f,#003d23);color:#c8ffe1}
   .server{background:rgba(0,60,30,.25);border:2px solid #7affbf}
+  #configBox{background:rgba(0,60,30,.35);border:2px solid #7affbf}
 }
 @media(prefers-color-scheme:light){
   body{background:linear-gradient(135deg,#ebfff4,#c8ffe1);color:#084d2e}
   .server{background:rgba(220,250,235,.7);border:2px solid #0b7d45}
+  #configBox{background:rgba(220,250,235,.8);border:2px solid #0b7d45}
 }
 
 #profileCorner{
@@ -58,6 +60,11 @@ body{
   width:200px;
   border-radius:14px;
   text-align:center;
+  cursor:pointer;
+  transition:.2s;
+}
+.server:hover{
+  transform:scale(1.05);
 }
 
 .server img{
@@ -65,6 +72,23 @@ body{
   height:60px;
   border-radius:50%;
   margin-bottom:8px;
+}
+
+#configBox{
+  margin-top:25px;
+  padding:20px;
+  border-radius:14px;
+  max-width:400px;
+  display:none;
+}
+
+input{
+  width:100%;
+  padding:10px;
+  margin-top:10px;
+  border-radius:10px;
+  border:none;
+  font-size:16px;
 }
 
 .btn{
@@ -87,6 +111,8 @@ body{
 
 <h2>Servidores donde estás</h2>
 <div id="servers">Cargando servidores...</div>
+
+<div id="configBox"></div>
 
 <a class="btn" id="logout">Cerrar sesión</a>
 
@@ -116,13 +142,11 @@ fetch("https://discord.com/api/users/@me/guilds", {
   const box = document.getElementById("servers");
   box.innerHTML = "";
 
-  // PERMISO "Manage Server" → 0x20 (32)
   const MANAGE_SERVER = 0x20;
-
   const filtered = guilds.filter(g => (g.permissions & MANAGE_SERVER) === MANAGE_SERVER);
 
   if (filtered.length === 0) {
-    box.innerHTML = "<p>No tienes servidores con permiso de Administrar servidor. K nuv</p>";
+    box.innerHTML = "<p>No tienes servidores con permiso de Administrar servidor.</p>";
     return;
   }
 
@@ -131,14 +155,28 @@ fetch("https://discord.com/api/users/@me/guilds", {
       ? `https://cdn.discordapp.com/icons/${g.id}/${g.icon}.png`
       : "https://cdn.discordapp.com/embed/avatars/0.png";
 
-    box.innerHTML += `
-      <div class="server">
-        <img src="${icon}">
-        <h4>${g.name}</h4>
-      </div>
+    const div = document.createElement("div");
+    div.className = "server";
+    div.innerHTML = `
+      <img src="${icon}">
+      <h4>${g.name}</h4>
     `;
+    div.onclick = () => openConfig(g);
+    box.appendChild(div);
   });
 });
+
+// abrir configuración
+function openConfig(guild){
+  const box = document.getElementById("configBox");
+  box.style.display = "block";
+
+  box.innerHTML = `
+    <h3>Configuración de ${guild.name}</h3>
+    <p><strong>Prefix:</strong></p>
+    <input type="text" id="prefixInput" maxlength="3" placeholder="1-3 caracteres">
+  `;
+}
 
 // logout
 document.getElementById("logout").onclick = () => {
@@ -146,3 +184,6 @@ document.getElementById("logout").onclick = () => {
   window.location.href = "login.html";
 };
 </script>
+
+</body>
+</html>
