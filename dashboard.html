@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Dashboard - RandomBot</title>
+
+<link rel="icon" href="https://cdn.discordapp.com/emojis/1416607460201857168.png?v=1" type="image/png">
+<meta property="og:title" content="Yalmil.com" />
+<meta property="og:description" content="Dashboard de RandomBot" />
+<meta property="og:image" content="https://cdn.discordapp.com/attachments/1355008732576088204/1402309070014124102/Screenshot_20250804-221210.png?ex=68937197&is=68922017&hm=1fa6f462304b2b8cf8a0875053730f988d725d114fbf2648fcb87ee1b67b6a76&" />
+<meta property="og:url" content="https://yalmil.github.io/Yalmil.com/" />
+<meta property="og:type" content="website" />
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+*{box-sizing:border-box;margin:0}
+body{font-family:'Poppins',sans-serif;display:flex;flex-direction:column;min-height:100vh;transition:.4s;justify-content:center;align-items:center;text-align:center;padding:20px}
+
+@media(prefers-color-scheme:dark){
+  body{background:linear-gradient(135deg,#001d0f,#003d23);color:#c8ffe1}
+  .box{background:rgba(0,60,30,.25);border:2px solid #7affbf}
+  .btn{background:#0bbf63;color:white}
+}
+@media(prefers-color-scheme:light){
+  body{background:linear-gradient(135deg,#ebfff4,#c8ffe1);color:#084d2e}
+  .box{background:rgba(220,250,235,.7);border:2px solid #0b7d45}
+  .btn{background:#11cc77;color:white}
+}
+
+.box{padding:25px;border-radius:14px;max-width:340px}
+.btn{padding:12px 18px;border-radius:12px;display:inline-block;margin-top:18px;text-decoration:none;font-weight:600}
+</style>
+
+</head>
+<body>
+
+<h2>Dashboard</h2>
+<div class="box" id="profileBox">
+  Cargando usuario...
+</div>
+
+<a class="btn" href="#" id="logout">Cerrar sesión</a>
+
+<script>
+const token = localStorage.getItem("discord_token");
+if (!token) window.location.href = "login.html";
+
+fetch("https://discord.com/api/users/@me", {
+  headers: { Authorization: `Bearer ${token}` }
+})
+.then(res => res.json())
+.then(user => {
+  document.getElementById("profileBox").innerHTML = `
+    <img src="https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png" width="100" style="border-radius:50%;margin-bottom:12px">
+    <h3>${user.username}</h3>
+    <p>ID: ${user.id}</p>
+  `;
+});
+
+// cerrar sesión
+document.getElementById("logout").onclick = () => {
+  localStorage.removeItem("discord_token");
+  window.location.href = "login.html";
+};
+</script>
+
+</body>
+</html>
