@@ -16,50 +16,122 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 *{box-sizing:border-box;margin:0}
-body{font-family:'Poppins',sans-serif;display:flex;flex-direction:column;min-height:100vh;transition:.4s;justify-content:center;align-items:center;text-align:center;padding:20px}
+
+body{
+  font-family:'Poppins',sans-serif;
+  min-height:100vh;
+  padding:20px;
+  transition:.4s;
+}
 
 @media(prefers-color-scheme:dark){
   body{background:linear-gradient(135deg,#001d0f,#003d23);color:#c8ffe1}
-  .box{background:rgba(0,60,30,.25);border:2px solid #7affbf}
-  .btn{background:#0bbf63;color:white}
+  .server{background:rgba(0,60,30,.25);border:2px solid #7affbf}
 }
 @media(prefers-color-scheme:light){
   body{background:linear-gradient(135deg,#ebfff4,#c8ffe1);color:#084d2e}
-  .box{background:rgba(220,250,235,.7);border:2px solid #0b7d45}
-  .btn{background:#11cc77;color:white}
+  .server{background:rgba(220,250,235,.7);border:2px solid #0b7d45}
 }
 
-.box{padding:25px;border-radius:14px;max-width:340px}
-.btn{padding:12px 18px;border-radius:12px;display:inline-block;margin-top:18px;text-decoration:none;font-weight:600}
-</style>
+#profileCorner{
+  position:fixed;
+  top:20px;
+  right:20px;
+  text-align:right;
+}
 
+#profileCorner img{
+  width:70px;
+  border-radius:50%;
+  border:3px solid white;
+}
+
+#servers{
+  margin-top:130px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:15px;
+}
+
+.server{
+  padding:15px;
+  width:200px;
+  border-radius:14px;
+  text-align:center;
+}
+
+.server img{
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  margin-bottom:8px;
+}
+
+.btn{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  padding:12px 18px;
+  border-radius:12px;
+  background:#11cc77;
+  color:white;
+  text-decoration:none;
+  font-weight:600;
+}
+</style>
 </head>
+
 <body>
 
-<h2>Dashboard</h2>
-<div class="box" id="profileBox">
-  Cargando usuario...
-</div>
+<div id="profileCorner">Cargando...</div>
 
-<a class="btn" href="#" id="logout">Cerrar sesión</a>
+<h2>Servidores donde estás</h2>
+<div id="servers">Cargando servidores...</div>
+
+<a class="btn" id="logout">Cerrar sesión</a>
 
 <script>
 const token = localStorage.getItem("discord_token");
 if (!token) window.location.href = "login.html";
 
+// cargar perfil
 fetch("https://discord.com/api/users/@me", {
   headers: { Authorization: `Bearer ${token}` }
 })
-.then(res => res.json())
+.then(r => r.json())
 .then(user => {
-  document.getElementById("profileBox").innerHTML = `
-    <img src="https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png" width="100" style="border-radius:50%;margin-bottom:12px">
-    <h3>${user.username}</h3>
-    <p>ID: ${user.id}</p>
+  document.getElementById("profileCorner").innerHTML = `
+    <img src="https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png">
+    <p><strong>${user.username}</strong></p>
   `;
 });
 
-// cerrar sesión
+// cargar servidores
+fetch("https://discord.com/api/users/@me/guilds", {
+  headers: { Authorization: `Bearer ${token}` }
+})
+.then(r => r.json())
+.then(guilds => {
+  const box = document.getElementById("servers");
+
+  box.innerHTML = "";
+
+  guilds.forEach(g => {
+    const icon = g.icon
+      ? `https://cdn.discordapp.com/icons/${g.id}/${g.icon}.png`
+      : "https://cdn.discordapp.com/embed/avatars/0.png";
+
+    box.innerHTML += `
+      <div class="server">
+        <img src="${icon}">
+        <h4>${g.name}</h4>
+        <p>ID: ${g.id}</p>
+      </div>
+    `;
+  });
+});
+
+// logout
 document.getElementById("logout").onclick = () => {
   localStorage.removeItem("discord_token");
   window.location.href = "login.html";
