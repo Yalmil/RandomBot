@@ -48,10 +48,6 @@ section{text-align:center;max-width:900px;margin:auto}
 .btn{padding:12px 18px;border-radius:12px;border:none;font-weight:600;cursor:pointer;transition:.2s}
 .btn:hover{opacity:.8}
 
-/* loading animation */
-.loading{margin:40px auto;width:90px;height:90px;border-radius:50%;border:8px solid transparent;border-top:8px solid currentColor;animation:spin 1s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-
 /* características */
 .features{display:flex;flex-direction:column;gap:22px;margin-top:40px}
 .box{padding:20px;border-radius:16px;text-align:left;animation:f .4s ease both}
@@ -74,7 +70,6 @@ section{text-align:center;max-width:900px;margin:auto}
 
     <div class="features">
 
-      <!-- EJEMPLO editable -->
       <div class="box">
         <h3>!añadir-nivel</h3>
         <p>Edita el nivel de algún usuario (solo admins)</p>
@@ -85,7 +80,7 @@ section{text-align:center;max-width:900px;margin:auto}
         <p>Muestra la lista de usuarios con más niveles</p>
       </div>
 
-            <div class="box">
+      <div class="box">
         <h3>!nivel @usuario</h3>
         <p>Muestra tu nivel o el de un usuario</p>
       </div>
@@ -100,6 +95,26 @@ section{text-align:center;max-width:900px;margin:auto}
         <p>Muestra la latencia del bot</p>
       </div>
 
+      <div class="box">
+        <h3>!purge 1-100</h3>
+        <p>Borra entre 1 y 100 mensajes del chat</p>
+      </div>
+
+      <div class="box">
+        <h3>!avatar @usuario</h3>
+        <p>Muestra el avatar del usuario mencionado</p>
+      </div>
+
+      <div class="box">
+        <h3>!emoji 😀</h3>
+        <p>Responde con la URL CDN del emoji</p>
+      </div>
+
+      <div class="box">
+        <h3>!server</h3>
+        <p>Muestra información completa del servidor</p>
+      </div>
+
     </div>
   </section>
 
@@ -112,4 +127,3 @@ section{text-align:center;max-width:900px;margin:auto}
 </body>
 
 </html>
-
