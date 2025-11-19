@@ -44,14 +44,8 @@ header{text-align:center;padding:28px;animation:f .35s ease both}
 main{flex:1;display:flex;flex-direction:column;gap:80px;padding:40px 16px;animation:f .5s ease both}
 section{text-align:center;max-width:900px;margin:auto}
 
-.btns{margin-top:22px;display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
-.btn{padding:12px 18px;border-radius:12px;border:none;font-weight:600;cursor:pointer;transition:.2s}
-.btn:hover{opacity:.8}
-
-/* características */
 .features{display:flex;flex-direction:column;gap:22px;margin-top:40px}
 .box{padding:20px;border-radius:16px;text-align:left;animation:f .4s ease both}
-.box img{width:100%;border-radius:10px;margin-top:10px}
 .box h3{margin-bottom:6px}
 </style>
 
@@ -64,30 +58,57 @@ section{text-align:center;max-width:900px;margin:auto}
 
 <main>
 
-  <!-- FEATURES -->
   <section id="features">
     <h2>Características</h2>
 
     <div class="features">
 
+      <!-- 📘 Nivel / XP -->
       <div class="box">
-        <h3>!añadir-nivel</h3>
-        <p>Edita el nivel de algún usuario (solo admins)</p>
+        <h3>!añadir-nivel @usuario &lt;nivel&gt;</h3>
+        <p>Edita el nivel de un usuario (admins)</p>
       </div>
 
       <div class="box">
         <h3>!leaderboard</h3>
-        <p>Muestra la lista de usuarios con más niveles</p>
+        <p>Muestra el top de niveles</p>
       </div>
 
       <div class="box">
         <h3>!nivel @usuario</h3>
-        <p>Muestra tu nivel o el de un usuario</p>
+        <p>Muestra tu nivel o el de otro usuario</p>
+      </div>
+
+      <!-- 🔨 Moderación -->
+      <div class="box">
+        <h3>!kick @usuario</h3>
+        <p>Expulsa al usuario mencionado</p>
       </div>
 
       <div class="box">
-        <h3>!prefix (nuevo prefix)</h3>
-        <p>Muestra o cambia el prefix</p>
+        <h3>!ban @usuario</h3>
+        <p>Banea al usuario mencionado</p>
+      </div>
+
+      <div class="box">
+        <h3>!timeout @usuario &lt;tiempo&gt;</h3>
+        <p>Suspende al usuario por el tiempo indicado</p>
+      </div>
+
+      <div class="box">
+        <h3>!untimeout @usuario</h3>
+        <p>Elimina la suspensión del usuario</p>
+      </div>
+
+      <div class="box">
+        <h3>!unban @usuario</h3>
+        <p>Desbanea al usuario indicado</p>
+      </div>
+
+      <!-- ⚙️ Utilidad -->
+      <div class="box">
+        <h3>!prefix &lt;nuevo&gt;</h3>
+        <p>Cambia o muestra el prefix</p>
       </div>
 
       <div class="box">
@@ -97,22 +118,54 @@ section{text-align:center;max-width:900px;margin:auto}
 
       <div class="box">
         <h3>!purge 1-100</h3>
-        <p>Borra entre 1 y 100 mensajes del chat</p>
+        <p>Borra mensajes del chat</p>
       </div>
 
       <div class="box">
         <h3>!avatar @usuario</h3>
-        <p>Muestra el avatar del usuario mencionado</p>
+        <p>Muestra el avatar del usuario</p>
       </div>
 
       <div class="box">
-        <h3>!emoji 😀</h3>
-        <p>Responde con la URL CDN del emoji</p>
+        <h3>!emoji &lt;emoji&gt;</h3>
+        <p>Muestra el link CDN del emoji</p>
       </div>
 
       <div class="box">
         <h3>!server</h3>
-        <p>Muestra información completa del servidor</p>
+        <p>Muestra información del servidor</p>
+      </div>
+
+      <!-- 🪄 Extras -->
+      <div class="box">
+        <h3>!hex-decode &lt;hex&gt;</h3>
+        <p>Decodifica texto hexadecimal</p>
+      </div>
+
+      <div class="box">
+        <h3>!hex-encode &lt;text&gt;</h3>
+        <p>Convierte texto a hexadecimal</p>
+      </div>
+
+      <div class="box">
+        <h3>!operacion &lt;operación&gt;</h3>
+        <p>Calcula el resultado de una operación matemática</p>
+      </div>
+
+      <div class="box">
+        <h3>!traducir &lt;text&gt;</h3>
+        <p>Traduce texto en inglés a español</p>
+      </div>
+
+      <!-- SLASH COMMANDS -->
+      <div class="box">
+        <h3>/recompensa-nivel</h3>
+        <p>Establece recompensas de nivel con un rol y nivel específico</p>
+      </div>
+
+      <div class="box">
+        <h3>/channel-logs</h3>
+        <p>Define el canal donde se enviarán los logs</p>
       </div>
 
     </div>
@@ -125,5 +178,4 @@ section{text-align:center;max-width:900px;margin:auto}
 </footer>
 
 </body>
-
 </html>
