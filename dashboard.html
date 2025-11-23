@@ -48,11 +48,17 @@ body{
   border:3px solid white;
 }
 
-#servers{
-  margin-top:130px;
+.sectionTitle{
+  margin-top:120px;
+  font-size:22px;
+  font-weight:600;
+}
+
+.serverList{
   display:flex;
   flex-wrap:wrap;
   gap:15px;
+  margin-top:15px;
 }
 
 .server{
@@ -109,8 +115,11 @@ input{
 
 <div id="profileCorner">Cargando...</div>
 
-<h2>Servidores donde estás</h2>
-<div id="servers">Cargando servidores...</div>
+<h2 class="sectionTitle">Servidores donde está el bot</h2>
+<div class="serverList" id="servers_with_bot">Cargando...</div>
+
+<h2 class="sectionTitle">Servidores donde puedes invitar el bot</h2>
+<div class="serverList" id="servers_without_bot">Cargando...</div>
 
 <div id="configBox"></div>
 
@@ -120,7 +129,6 @@ input{
 const token = localStorage.getItem("discord_token");
 if (!token) window.location.href = "login.html";
 
-// cargar perfil
 fetch("https://discord.com/api/users/@me", {
   headers: { Authorization: `Bearer ${token}` }
 })
@@ -132,25 +140,34 @@ fetch("https://discord.com/api/users/@me", {
   `;
 });
 
-// cargar servidores
-fetch("https://discord.com/api/users/@me/guilds", {
-  headers: { Authorization: `Bearer ${token}` }
-})
-.then(r => r.json())
-.then(guilds => {
+// Guilds del usuario
+Promise.all([
+  fetch("https://discord.com/api/users/@me/guilds", {
+    headers: { Authorization: `Bearer ${token}` }
+  }).then(r => r.json()),
 
-  const box = document.getElementById("servers");
-  box.innerHTML = "";
+  fetch("https://discord.com/api/users/@me/guilds?with_counts=true", {
+    headers: { Authorization: `Bearer ${token}` }
+  }).then(r => r.json())
+])
+.then(async ([guilds]) => {
+
+  const serversWithBot = document.getElementById("servers_with_bot");
+  const serversWithoutBot = document.getElementById("servers_without_bot");
+
+  serversWithBot.innerHTML = "";
+  serversWithoutBot.innerHTML = "";
 
   const MANAGE_SERVER = 0x20;
-  const filtered = guilds.filter(g => (g.permissions & MANAGE_SERVER) === MANAGE_SERVER);
 
-  if (filtered.length === 0) {
-    box.innerHTML = "<p>No tienes servidores con permiso de Administrar servidor.</p>";
-    return;
-  }
+  // Obtener guilds donde realmente está el bot
+  const botGuilds = await fetch("/bot_guilds.json").then(r=>r.json()).catch(()=>[]);
 
-  filtered.forEach(g => {
+  guilds.forEach(g => {
+    const hasManage = (g.permissions & MANAGE_SERVER) === MANAGE_SERVER;
+
+    if (!hasManage) return;
+
     const icon = g.icon
       ? `https://cdn.discordapp.com/icons/${g.id}/${g.icon}.png`
       : "https://cdn.discordapp.com/embed/avatars/0.png";
@@ -161,12 +178,20 @@ fetch("https://discord.com/api/users/@me/guilds", {
       <img src="${icon}">
       <h4>${g.name}</h4>
     `;
-    div.onclick = () => openConfig(g);
-    box.appendChild(div);
+
+    if (botGuilds.includes(g.id)) {
+      div.onclick = () => openConfig(g);
+      serversWithBot.appendChild(div);
+    } else {
+      div.onclick = () => {
+        window.location.href = `invitar.html?guild=${g.id}`;
+      };
+      serversWithoutBot.appendChild(div);
+    }
   });
 });
 
-// abrir configuración
+// caja de configuración
 function openConfig(guild){
   const box = document.getElementById("configBox");
   box.style.display = "block";
@@ -178,7 +203,6 @@ function openConfig(guild){
   `;
 }
 
-// logout
 document.getElementById("logout").onclick = () => {
   localStorage.removeItem("discord_token");
   window.location.href = "login.html";
