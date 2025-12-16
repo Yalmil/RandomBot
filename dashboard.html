@@ -168,39 +168,34 @@ function loadUserGuilds() {
 
     serversWithBot.innerHTML = "";
     serversWithoutBot.innerHTML = "";
+const MANAGE_GUILD = 0x20n;
 
-    const MANAGE_GUILD = 0x20;
-    let withBot = 0;
-    let withoutBot = 0;
+guilds.forEach(g => {
+  if ( (BigInt(g.permissions) & MANAGE_GUILD) !== MANAGE_GUILD ) return;
 
-    guilds.forEach(g => {
-      if ((g.permissions & MANAGE_GUILD) !== MANAGE_GUILD) return;
+  const botInside = botGuilds.includes(g.id);
 
-      const botInside = botGuilds.includes(g.id);
+  const icon = g.icon
+    ? `https://cdn.discordapp.com/icons/${g.id}/${g.icon}.png`
+    : "https://cdn.discordapp.com/embed/avatars/0.png";
 
-      const icon = g.icon
-        ? `https://cdn.discordapp.com/icons/${g.id}/${g.icon}.png`
-        : "https://cdn.discordapp.com/embed/avatars/0.png";
+  const div = document.createElement("div");
+  div.className = "server";
+  div.innerHTML = `
+    <img src="${icon}">
+    <h4>${g.name}</h4>
+  `;
 
-      const div = document.createElement("div");
-      div.className = "server";
-      div.innerHTML = `
-        <img src="${icon}">
-        <h4>${g.name}</h4>
-      `;
-
-      if (botInside) {
-        div.onclick = () => openConfig(g);
-        serversWithBot.appendChild(div);
-        withBot++;
-      } else {
-        div.onclick = () => {
-          window.location.href = `invitar.html?guild=${g.id}`;
-        };
-        serversWithoutBot.appendChild(div);
-        withoutBot++;
-      }
-    });
+  if (botInside) {
+    div.onclick = () => openConfig(g);
+    serversWithBot.appendChild(div);
+  } else {
+    div.onclick = () => {
+      window.location.href = `invitar.html?guild=${g.id}`;
+    };
+    serversWithoutBot.appendChild(div);
+  }
+});
 
     if (withBot === 0)
       serversWithBot.innerHTML = "<p>No hay servidores</p>";
