@@ -124,12 +124,13 @@ input{
 <div id="configBox"></div>
 
 <a class="btn" id="logout">Cerrar sesión</a>
-
 <script>
 const token = localStorage.getItem("discord_token");
 if (!token) window.location.href = "login.html";
 
-// Perfil
+let botGuilds = [];
+
+// No se, weón (Perfil)
 fetch("https://discord.com/api/users/@me", {
   headers: { Authorization: `Bearer ${token}` }
 })
@@ -141,60 +142,67 @@ fetch("https://discord.com/api/users/@me", {
   `;
 });
 
-// Guilds del usuario, con info del BOT para verificar si está dentro
-fetch("https://discord.com/api/users/@me/guilds?with_member=true", {
-  headers: { Authorization: `Bearer ${token}` }
-})
+// Servidores - bot
+fetch("/api/bot-guilds")
 .then(r => r.json())
-.then(guilds => {
-
-  const serversWithBot = document.getElementById("servers_with_bot");
-  const serversWithoutBot = document.getElementById("servers_without_bot");
-
-  serversWithBot.innerHTML = "";
-  serversWithoutBot.innerHTML = "";
-
-  const MANAGE_SERVER = 0x20;
-
-  guilds.forEach(g => {
-    const hasManage = (g.permissions & MANAGE_SERVER) === MANAGE_SERVER;
-    if (!hasManage) return;
-
-    const botInside = g.member !== undefined;
-
-    const icon = g.icon
-      ? `https://cdn.discordapp.com/icons/${g.id}/${g.icon}.png`
-      : "https://cdn.discordapp.com/embed/avatars/0.png";
-
-    const div = document.createElement("div");
-    div.className = "server";
-    div.innerHTML = `
-      <img src="${icon}">
-      <h4>${g.name}</h4>
-    `;
-
-    if (botInside) {
-      div.onclick = () => openConfig(g);
-      serversWithBot.appendChild(div);
-    } else {
-      div.onclick = () => {
-        window.location.href = `invitar.html?guild=${g.id}`;
-      };
-      serversWithoutBot.appendChild(div);
-    }
-  });
-
+.then(ids => {
+  botGuilds = ids.map(String);
+  loadUserGuilds();
 });
 
-// Configuración
+function loadUserGuilds(){
+  // Servidores - usuario
+  fetch("https://discord.com/api/users/@me/guilds", {
+    headers: { Authorization: `Bearer ${token}` }
+  })
+  .then(r => r.json())
+  .then(guilds => {
+
+    const serversWithBot = document.getElementById("servers_with_bot");
+    const serversWithoutBot = document.getElementById("servers_without_bot");
+
+    serversWithBot.innerHTML = "";
+    serversWithoutBot.innerHTML = "";
+
+    const MANAGE_GUILD = 0x20;
+
+    guilds.forEach(g => {
+      if ((g.permissions & MANAGE_GUILD) !== MANAGE_GUILD) return;
+
+      const botInside = botGuilds.includes(g.id);
+
+      const icon = g.icon
+        ? `https://cdn.discordapp.com/icons/${g.id}/${g.icon}.png`
+        : "https://cdn.discordapp.com/embed/avatars/0.png";
+
+      const div = document.createElement("div");
+      div.className = "server";
+      div.innerHTML = `
+        <img src="${icon}">
+        <h4>${g.name}</h4>
+      `;
+
+      if (botInside) {
+        div.onclick = () => openConfig(g);
+        serversWithBot.appendChild(div);
+      } else {
+        div.onclick = () => {
+          window.location.href = `invitar.html?guild=${g.id}`;
+        };
+        serversWithoutBot.appendChild(div);
+      }
+    });
+  });
+}
+
+// Tuki (Configuración)
 function openConfig(guild){
   const box = document.getElementById("configBox");
   box.style.display = "block";
-
   box.innerHTML = `
     <h3>Configuración de ${guild.name}</h3>
     <p><strong>Prefix:</strong></p>
-    <input type="text" id="prefixInput" maxlength="3" placeholder="1-3 caracteres">
+    <input type="text" maxlength="3" placeholder="1-3 caracteres">
   `;
 }
 
@@ -203,7 +211,7 @@ document.getElementById("logout").onclick = () => {
   localStorage.removeItem("discord_token");
   window.location.href = "login.html";
 };
-</script>
+      </script>
 
 </body>
 </html>
