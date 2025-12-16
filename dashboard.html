@@ -165,13 +165,16 @@ function loadUserGuilds() {
 
     const serversWithBot = document.getElementById("servers_with_bot");
     const serversWithoutBot = document.getElementById("servers_without_bot");
+serversWithBot.innerHTML = "";
+serversWithoutBot.innerHTML = "";
 
-    serversWithBot.innerHTML = "";
-    serversWithoutBot.innerHTML = "";
+let withBot = 0;
+let withoutBot = 0;
+
 const MANAGE_GUILD = 0x20n;
 
 guilds.forEach(g => {
-  if ( (BigInt(g.permissions) & MANAGE_GUILD) !== MANAGE_GUILD ) return;
+  if ((BigInt(g.permissions) & MANAGE_GUILD) !== MANAGE_GUILD) return;
 
   const botInside = botGuilds.includes(g.id);
 
@@ -189,19 +192,21 @@ guilds.forEach(g => {
   if (botInside) {
     div.onclick = () => openConfig(g);
     serversWithBot.appendChild(div);
+    withBot++;
   } else {
     div.onclick = () => {
       window.location.href = `invitar.html?guild=${g.id}`;
     };
     serversWithoutBot.appendChild(div);
+    withoutBot++;
   }
 });
 
-    if (withBot === 0)
-      serversWithBot.innerHTML = "<p>No hay servidores</p>";
+if (withBot === 0)
+  serversWithBot.innerHTML = "<p>No hay servidores</p>";
 
-    if (withoutBot === 0)
-      serversWithoutBot.innerHTML = "<p>No hay servidores</p>";
+if (withoutBot === 0)
+  serversWithoutBot.innerHTML = "<p>No hay servidores</p>";
   })
   .catch(err => {
     console.error("User guilds error:", err);
