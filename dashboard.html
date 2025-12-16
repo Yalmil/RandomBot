@@ -130,7 +130,7 @@ if (!token) window.location.href = "login.html";
 
 let botGuilds = [];
 
-// No se, weón (Perfil)
+// Perfil
 fetch("https://discord.com/api/users/@me", {
   headers: { Authorization: `Bearer ${token}` }
 })
@@ -140,88 +140,88 @@ fetch("https://discord.com/api/users/@me", {
     <img src="https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png">
     <p><strong>${user.username}</strong></p>
   `;
-});
+})
+.catch(err => console.error("Perfil error:", err));
 
-// Servidores - bot
+// Servidores del bot
 fetch("http://localhost:3000/api/bot-guilds")
 .then(r => r.json())
 .then(ids => {
   botGuilds = Array.isArray(ids) ? ids.map(String) : [];
   loadUserGuilds();
 })
-.catch(() => {
-  console.warn("No se pudieron cargar los guilds del bot");
+.catch(err => {
+  console.warn("Bot guilds error:", err);
   botGuilds = [];
   loadUserGuilds();
 });
 
-function loadUserGuilds(){
-  // Servidores - usuario
-fetch("https://discord.com/api/users/@me/guilds", {
-  headers: { Authorization: `Bearer ${token}` }
-})
-.then(r => r.json())
-.then(guilds => {
+function loadUserGuilds() {
+  fetch("https://discord.com/api/users/@me/guilds", {
+    headers: { Authorization: `Bearer ${token}` }
+  })
+  .then(r => r.json())
+  .then(guilds => {
 
-  const serversWithBot = document.getElementById("servers_with_bot");
-  const serversWithoutBot = document.getElementById("servers_without_bot");
+    const serversWithBot = document.getElementById("servers_with_bot");
+    const serversWithoutBot = document.getElementById("servers_without_bot");
 
-  serversWithBot.innerHTML = "";
-  serversWithoutBot.innerHTML = "";
+    serversWithBot.innerHTML = "";
+    serversWithoutBot.innerHTML = "";
 
-  const MANAGE_GUILD = 0x20;
-  let countWith = 0;
-  let countWithout = 0;
+    const MANAGE_GUILD = 0x20;
+    let withBot = 0;
+    let withoutBot = 0;
 
-  guilds.forEach(g => {
-    if ((g.permissions & MANAGE_GUILD) !== MANAGE_GUILD) return;
+    guilds.forEach(g => {
+      if ((g.permissions & MANAGE_GUILD) !== MANAGE_GUILD) return;
 
-    const botInside = botGuilds.includes(g.id);
+      const botInside = botGuilds.includes(g.id);
 
-    const icon = g.icon
-      ? `https://cdn.discordapp.com/icons/${g.id}/${g.icon}.png`
-      : "https://cdn.discordapp.com/embed/avatars/0.png";
+      const icon = g.icon
+        ? `https://cdn.discordapp.com/icons/${g.id}/${g.icon}.png`
+        : "https://cdn.discordapp.com/embed/avatars/0.png";
 
-    const div = document.createElement("div");
-    div.className = "server";
-    div.innerHTML = `
-      <img src="${icon}">
-      <h4>${g.name}</h4>
-    `;
+      const div = document.createElement("div");
+      div.className = "server";
+      div.innerHTML = `
+        <img src="${icon}">
+        <h4>${g.name}</h4>
+      `;
 
-    if (botInside) {
-      div.onclick = () => openConfig(g);
-      serversWithBot.appendChild(div);
-      countWith++;
-    } else {
-      div.onclick = () => {
-        window.location.href = `invitar.html?guild=${g.id}`;
-      };
-      serversWithoutBot.appendChild(div);
-      countWithout++;
-    }
+      if (botInside) {
+        div.onclick = () => openConfig(g);
+        serversWithBot.appendChild(div);
+        withBot++;
+      } else {
+        div.onclick = () => {
+          window.location.href = `invitar.html?guild=${g.id}`;
+        };
+        serversWithoutBot.appendChild(div);
+        withoutBot++;
+      }
+    });
+
+    if (withBot === 0)
+      serversWithBot.innerHTML = "<p>No hay servidores</p>";
+
+    if (withoutBot === 0)
+      serversWithoutBot.innerHTML = "<p>No hay servidores</p>";
+  })
+  .catch(err => {
+    console.error("User guilds error:", err);
+    document.getElementById("servers_with_bot").innerText = "Error";
+    document.getElementById("servers_without_bot").innerText = "Error";
   });
+}
 
-  if (countWith === 0)
-    serversWithBot.innerHTML = "<p>No hay servidores</p>";
-
-  if (countWithout === 0)
-    serversWithoutBot.innerHTML = "<p>No hay servidores</p>";
-})
-.catch(err => {
-  console.error(err);
-  document.getElementById("servers_with_bot").innerHTML = "Error cargando servidores";
-  document.getElementById("servers_without_bot").innerHTML = "Error cargando servidores";
-});
-
-// Tuki (Configuración)
-function openConfig(guild){
+// Configuración
+function openConfig(guild) {
   const box = document.getElementById("configBox");
   box.style.display = "block";
   box.innerHTML = `
     <h3>Configuración de ${guild.name}</h3>
-    <p><strong>Prefix:</strong></p>
-    <input type="text" maxlength="3" placeholder="1-3 caracteres">
+    <input type="text" maxlength="3" placeholder="Prefix">
   `;
 }
 
@@ -230,7 +230,7 @@ document.getElementById("logout").onclick = () => {
   localStorage.removeItem("discord_token");
   window.location.href = "login.html";
 };
-      </script>
+    </script>
 
 </body>
 </html>
