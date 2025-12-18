@@ -4,178 +4,861 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>RandomBot - Comandos</title>
+<title>Mip - Comandos</title>
 
-<link rel="icon" href="https://cdn.discordapp.com/emojis/1416607460201857168.png?v=1" type="image/png">
-<meta property="og:title" content="Yalmil.com" />
-<meta property="og:description" content="Página principal de RandomBot" />
-<meta property="og:image" content="https://cdn.discordapp.com/attachments/1355008732576088204/1402309070014124102/Screenshot_20250804-221210.png?ex=68937197&is=68922017&hm=1fa6f462304b2b8cf8a0875053730f988d725d114fbf2648fcb87ee1b67b6a76&" />
-<meta property="og:url" content="https://yalmil.github.io/Yalmil.com/" />
+<link rel="icon" href="https://MipBot.pages.dev/recursos/mip.png" type="image/png">
+<meta property="og:title" content="MipBot" />
+<meta property="og:description" content="Página de comandos de Mip" />
+<meta property="og:image" content="https://mipbot.pages.dev/recursos/mip.png" />
+<meta property="og:url" content="https://mipbot.pages.dev/comandos.html" />
 <meta property="og:type" content="website" />
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-*{box-sizing:border-box;margin:0}
-body{font-family:'Poppins',sans-serif;display:flex;flex-direction:column;min-height:100vh;transition:.4s;scroll-behavior:smooth}
-@keyframes f{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-
-/* VERDE */
-@media(prefers-color-scheme:dark){
-  body{background:linear-gradient(135deg,#001d0f,#003d23);color:#c8ffe1}
-  header,footer{background:#002818;color:#7affbf}
-  header{border-bottom:2px solid #7affbf}
-  header h1{color:#7affbf}
-  section h2{color:#7affbf}
-  .box{background:rgba(0,60,30,.25);border:2px solid #7affbf;color:#c8ffe1}
-  .btn{background:#0bbf63;color:white}
-}
-@media(prefers-color-scheme:light){
-  body{background:linear-gradient(135deg,#ebfff4,#c8ffe1);color:#084d2e}
-  header,footer{background:#d6fbe9;color:#0b7d45}
-  header{border-bottom:2px solid #0b7d45}
-  header h1{color:#0b7d45}
-  section h2{color:#0b7d45}
-  .box{background:rgba(220,250,235,.7);border:2px solid #0b7d45;color:#084d2e}
-  .btn{background:#11cc77;color:white}
-}
-
-/* Layout */
-header{text-align:center;padding:28px;animation:f .35s ease both}
-main{flex:1;display:flex;flex-direction:column;gap:80px;padding:40px 16px;animation:f .5s ease both}
-section{text-align:center;max-width:900px;margin:auto}
-
-.features{display:flex;flex-direction:column;gap:22px;margin-top:40px}
-.box{padding:20px;border-radius:16px;text-align:left;animation:f .4s ease both}
-.box h3{margin-bottom:6px}
+  /* Reset y variables CSS */
+  :root {
+    --primary: #00ff9d;
+    --secondary: #00b8ff;
+    --dark: #0a0f1e;
+    --darker: #050a15;
+    --card-bg: rgba(10, 20, 30, 0.7);
+    --glow: rgba(0, 255, 157, 0.5);
+    --text: #e0f7fa;
+    --text-secondary: #a0d2e3;
+    --command-category: rgba(0, 255, 157, 0.1);
+    --command-box: rgba(15, 30, 45, 0.8);
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    background-color: var(--darker);
+    background-image: 
+      radial-gradient(circle at 10% 20%, rgba(0, 255, 157, 0.05) 0%, transparent 20%),
+      radial-gradient(circle at 90% 80%, rgba(0, 184, 255, 0.05) 0%, transparent 20%),
+      linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
+    color: var(--text);
+    font-family: 'Exo 2', 'Segoe UI', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    scroll-behavior: smooth;
+  }
+  
+  /* Fondo animado de partículas */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+      radial-gradient(2px 2px at 20px 30px, var(--primary) 50%, transparent),
+      radial-gradient(2px 2px at 40px 70px, var(--secondary) 50%, transparent),
+      radial-gradient(3px 3px at 60px 20px, var(--primary) 50%, transparent),
+      radial-gradient(2px 2px at 80px 50px, var(--secondary) 50%, transparent),
+      radial-gradient(3px 3px at 90px 80px, var(--primary) 50%, transparent);
+    background-size: 100px 100px;
+    z-index: -1;
+    animation: floatParticles 20s linear infinite;
+  }
+  
+  @keyframes floatParticles {
+    0% { transform: translateY(0) translateX(0); }
+    25% { transform: translateY(-20px) translateX(10px); }
+    50% { transform: translateY(-10px) translateX(-10px); }
+    75% { transform: translateY(10px) translateX(15px); }
+    100% { transform: translateY(0) translateX(0); }
+  }
+  
+  /* Header futurista */
+  header {
+    padding: 3rem 1rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    background: rgba(5, 10, 20, 0.7);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 255, 157, 0.2);
+  }
+  
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    max-width: 600px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent);
+    animation: scanLine 4s linear infinite;
+  }
+  
+  @keyframes scanLine {
+    0% { background-position: -600px 0; }
+    100% { background-position: 600px 0; }
+  }
+  
+  .title-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .title-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120%;
+    height: 120%;
+    background: radial-gradient(circle, var(--glow) 0%, transparent 70%);
+    filter: blur(20px);
+    z-index: -1;
+    animation: pulseGlow 3s ease-in-out infinite;
+  }
+  
+  @keyframes pulseGlow {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.6; }
+  }
+  
+  header h1 {
+    font-size: 2.8rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-transform: uppercase;
+    position: relative;
+    text-shadow: 0 0 15px rgba(0, 255, 157, 0.3);
+  }
+  
+  header p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+  }
+  
+  /* Navegación de categorías */
+  .category-nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: rgba(10, 20, 30, 0.5);
+    backdrop-filter: blur(5px);
+    border-bottom: 1px solid rgba(0, 255, 157, 0.1);
+  }
+  
+  .category-btn {
+    padding: 0.7rem 1.5rem;
+    background: rgba(20, 35, 50, 0.7);
+    border: 1px solid rgba(0, 255, 157, 0.2);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+  }
+  
+  .category-btn:hover,
+  .category-btn.active {
+    background: rgba(0, 255, 157, 0.1);
+    color: var(--primary);
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 255, 157, 0.2);
+  }
+  
+  /* Contenedor principal */
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    position: relative;
+  }
+  
+  /* Sección de categoría */
+  .category-section {
+    margin-bottom: 3rem;
+    animation: fadeInUp 0.6s ease-out;
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .category-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid rgba(0, 255, 157, 0.3);
+  }
+  
+  .category-icon {
+    font-size: 2rem;
+    color: var(--primary);
+  }
+  
+  .category-title {
+    font-size: 2rem;
+    color: var(--primary);
+    position: relative;
+  }
+  
+  .category-title::after {
+    content: '';
+    position: absolute;
+    bottom: -1rem;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), transparent);
+  }
+  
+  /* Grid de comandos */
+  .commands-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  /* Tarjeta de comando */
+  .command-card {
+    background: var(--command-box);
+    border-radius: 12px;
+    padding: 1.5rem;
+    border: 1px solid rgba(0, 255, 157, 0.1);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+  }
+  
+  .command-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--primary), var(--secondary));
+  }
+  
+  .command-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--primary);
+    box-shadow: 0 10px 25px rgba(0, 255, 157, 0.2);
+  }
+  
+  .command-card::after {
+    content: '▶';
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    color: var(--secondary);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .command-card:hover::after {
+    opacity: 1;
+    animation: bounceRight 1s infinite;
+  }
+  
+  @keyframes bounceRight {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(5px); }
+  }
+  
+  .command-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+  }
+  
+  .command-name {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--primary);
+    font-family: 'Consolas', 'Monaco', monospace;
+    background: rgba(0, 255, 157, 0.1);
+    padding: 0.3rem 0.8rem;
+    border-radius: 6px;
+    border: 1px solid rgba(0, 255, 157, 0.3);
+  }
+  
+  .command-type {
+    font-size: 0.8rem;
+    padding: 0.2rem 0.6rem;
+    background: rgba(0, 184, 255, 0.2);
+    border-radius: 4px;
+    color: var(--secondary);
+    border: 1px solid rgba(0, 184, 255, 0.3);
+  }
+  
+  .command-description {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-size: 1rem;
+  }
+  
+  .command-usage {
+    margin-top: 1rem;
+    padding: 0.8rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    font-family: 'Consolas', 'Monaco', monospace;
+    color: var(--text);
+    font-size: 0.9rem;
+    border-left: 3px solid var(--secondary);
+  }
+  
+  .command-usage .arg {
+    color: var(--primary);
+  }
+  
+  .command-usage .optional {
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+  
+  /* Categorías específicas */
+  .category-nivel { border-left: 4px solid #00ff9d; }
+  .category-moderacion { border-left: 4px solid #ff5555; }
+  .category-utilidad { border-left: 4px solid #5555ff; }
+  .category-ia { border-left: 4px solid #ff55ff; }
+  .category-extras { border-left: 4px solid #ffff55; }
+  .category-slash { border-left: 4px solid #55ffff; }
+  
+  /* Footer */
+  footer {
+    margin-top: 4rem;
+    padding: 2rem 1rem;
+    text-align: center;
+    position: relative;
+    border-top: 1px solid rgba(0, 255, 157, 0.1);
+    background: rgba(5, 10, 20, 0.7);
+    backdrop-filter: blur(5px);
+  }
+  
+  footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    animation: footerGlow 3s ease-in-out infinite;
+  }
+  
+  @keyframes footerGlow {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+  
+  footer p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    letter-spacing: 1px;
+    position: relative;
+  }
+  
+  /* Botón de copiar comando */
+  .copy-btn {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    background: rgba(0, 255, 157, 0.1);
+    border: 1px solid rgba(0, 255, 157, 0.3);
+    color: var(--primary);
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    opacity: 0;
+    transition: all 0.3s ease;
+  }
+  
+  .command-card:hover .copy-btn {
+    opacity: 1;
+  }
+  
+  .copy-btn:hover {
+    background: rgba(0, 255, 157, 0.2);
+    transform: scale(1.05);
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    header h1 {
+      font-size: 2rem;
+    }
+    
+    .commands-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .category-nav {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .category-btn {
+      width: 100%;
+      max-width: 250px;
+      text-align: center;
+    }
+    
+    .category-title {
+      font-size: 1.6rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    header h1 {
+      font-size: 1.8rem;
+    }
+    
+    .command-card {
+      padding: 1.2rem;
+    }
+    
+    .command-name {
+      font-size: 1.1rem;
+    }
+  }
 </style>
 
 </head>
 <body>
-
 <header>
-  <h1>Comandos de RandomBot</h1>
+  <div class="title-container">
+    <div class="title-glow"></div>
+    <h1>Comandos de Mip</h1>
+  </div>
+  <p>Descubre todos los comandos disponibles del bot Mip</p>
 </header>
 
+<nav class="category-nav">
+  <button class="category-btn active" data-category="todos">Todos</button>
+  <button class="category-btn" data-category="nivel">Nivel/XP</button>
+  <button class="category-btn" data-category="moderacion">Moderación</button>
+  <button class="category-btn" data-category="utilidad">Utilidad</button>
+  <button class="category-btn" data-category="ia">Inteligencia Artificial</button>
+  <button class="category-btn" data-category="extras">Extras</button>
+  <button class="category-btn" data-category="slash">Slash Commands</button>
+</nav>
+
 <main>
-
-  <section id="features">
-    <h2>Características</h2>
-
-    <div class="features">
-
-      <!-- 📘 Nivel / XP -->
-      <div class="box">
-        <h3>!añadir-nivel @usuario &lt;nivel&gt;</h3>
-        <p>Edita el nivel de un usuario (admins)</p>
+  <!-- 📘 Nivel / XP -->
+  <section class="category-section category-nivel" id="nivel">
+    <div class="category-header">
+      <div class="category-icon">📘</div>
+      <h2 class="category-title">Nivel / XP</h2>
+    </div>
+    
+    <div class="commands-grid">
+      <div class="command-card">
+        <div class="command-header">
+          <div class="command-name">!nivel</div>
+          <span class="command-type">Usuario</span>
+        </div>
+        <p class="command-description">Muestra tu nivel actual o el de otro usuario mencionado.</p>
+        <div class="command-usage">!nivel <span class="arg">[@usuario]</span></div>
+        <button class="copy-btn">Copiar</button>
       </div>
-
-      <div class="box">
-        <h3>!leaderboard</h3>
-        <p>Muestra el top de niveles</p>
+      
+      <div class="command-card">
+        <div class="command-header">
+          <div class="command-name">!añadir-nivel</div>
+          <span class="command-type">Admin</span>
+        </div>
+        <p class="command-description">Edita manualmente el nivel de un usuario específico.</p>
+        <div class="command-usage">!añadir-nivel <span class="arg">@usuario nivel</span></div>
+        <button class="copy-btn">Copiar</button>
       </div>
-
-      <div class="box">
-        <h3>!nivel @usuario</h3>
-        <p>Muestra tu nivel o el de otro usuario</p>
+      
+      <div class="command-card">
+        <div class="command-header">
+          <div class="command-name">!leaderboard</div>
+          <span class="command-type">Usuario</span>
+        </div>
+        <p class="command-description">Muestra el ranking de los usuarios con mayor nivel en el servidor.</p>
+        <div class="command-usage">!leaderboard</div>
+        <button class="copy-btn">Copiar</button>
       </div>
-
-      <!-- 🔨 Moderación -->
-      <div class="box">
-        <h3>!kick @usuario</h3>
-        <p>Expulsa al usuario mencionado</p>
-      </div>
-
-      <div class="box">
-        <h3>!ban @usuario</h3>
-        <p>Banea al usuario mencionado</p>
-      </div>
-
-      <div class="box">
-        <h3>!timeout @usuario &lt;tiempo&gt;</h3>
-        <p>Suspende al usuario por el tiempo indicado</p>
-      </div>
-
-      <div class="box">
-        <h3>!untimeout @usuario</h3>
-        <p>Elimina la suspensión del usuario</p>
-      </div>
-
-      <div class="box">
-        <h3>!unban @usuario</h3>
-        <p>Desbanea al usuario indicado</p>
-      </div>
-
-      <!-- ⚙️ Utilidad -->
-      <div class="box">
-        <h3>!prefix &lt;nuevo&gt;</h3>
-        <p>Cambia o muestra el prefix</p>
-      </div>
-
-      <div class="box">
-        <h3>!ping</h3>
-        <p>Muestra la latencia del bot</p>
-      </div>
-
-      <div class="box">
-        <h3>!purge 1-100</h3>
-        <p>Borra mensajes del chat</p>
-      </div>
-
-      <div class="box">
-        <h3>!avatar @usuario</h3>
-        <p>Muestra el avatar del usuario</p>
-      </div>
-
-      <div class="box">
-        <h3>!emoji &lt;emoji&gt;</h3>
-        <p>Muestra el link CDN del emoji</p>
-      </div>
-
-      <div class="box">
-        <h3>!server</h3>
-        <p>Muestra información del servidor</p>
-      </div>
-
-      <!-- 🪄 Extras -->
-      <div class="box">
-        <h3>!hex-decode &lt;hex&gt;</h3>
-        <p>Decodifica texto hexadecimal</p>
-      </div>
-
-      <div class="box">
-        <h3>!hex-encode &lt;text&gt;</h3>
-        <p>Convierte texto a hexadecimal</p>
-      </div>
-
-      <div class="box">
-        <h3>!operacion &lt;operación&gt;</h3>
-        <p>Calcula el resultado de una operación matemática</p>
-      </div>
-
-      <div class="box">
-        <h3>!traducir &lt;text&gt;</h3>
-        <p>Traduce texto en inglés a español</p>
-      </div>
-
-      <!-- SLASH COMMANDS -->
-      <div class="box">
-        <h3>/recompensa-nivel</h3>
-        <p>Establece recompensas de nivel con un rol y nivel específico</p>
-      </div>
-
-      <div class="box">
-        <h3>/channel-logs</h3>
-        <p>Define el canal donde se enviarán los logs</p>
-      </div>
-
     </div>
   </section>
 
+  <!-- 🔨 Moderación -->
+  <section class="category-section category-moderacion" id="moderacion">
+    <div class="category-header">
+      <div class="category-icon">🔨</div>
+      <h2 class="category-title">Moderación</h2>
+    </div>
+    
+    <div class="commands-grid">
+      <div class="command-card">
+        <div class="command-header">
+          <div class="command-name">!kick</div>
+          <span class="command-type">Admin</span>
+        </div>
+        <p class="command-description">Expulsa a un usuario del servidor.</p>
+        <div class="command-usage">!kick <span class="arg">@usuario</span> <span class="optional">[razón]</span></div>
+        <button class="copy-btn">Copiar</button>
+      </div>
+      
+      <div class="command-card">
+        <div class="command-header">
+          <div class="command-name">!ban</div>
+          <span class="command-type">Admin</span>
+        </div>
+        <p class="command-description">Banea permanentemente a un usuario del servidor.</p>
+        <div class="command-usage">!ban <span class="arg">@usuario</span> <span class="optional">[razón]</span></div>
+        <button class="copy-btn">Copiar</button>
+      </div>
+      
+      <div class="command-card">
+        <div class="command-header">
+          <div class="command-name">!timeout</div>
+          <span class="command-type">Admin</span>
+        </div>
+        <p class="command-description">Suspende a un usuario por un tiempo específico.</p>
+        <div class="command-usage">!timeout <span class="arg">@usuario tiempo</span></div>
+        <button class="copy-btn">Copiar</button>
+      </div>
+      
+      <div class="command-card">
+        <div class="command-header">
+          <div class="command-name">!unban</div>
+          <span class="command-type">Admin</span>
+        </div>
+        <p class="command-description">Desbanea a un usuario previamente baneado.</p>
+        <div class="command-usage">!unban <span class="arg">usuario#id</span></div>
+        <button class="copy-btn">Copiar</button>
+      </div>
+      
+      <div class="command-card">
+        <div class="command-header">
+          <div class="command-name">!purge</div>
+          <span class="command-type">Admin</span>
+        </div>
+        <p class="command-description">Elimina múltiples mensajes del canal actual.</p>
+        <div class="command-usage">!purge <span class="arg">1-100</span></div>
+        <button class="copy-btn">Copiar</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⚙️ Utilidad -->
+  <section class="category-section category-utilidad" id="utilidad">
+    <div class="category-header">
+      <div class="category-icon">⚙️</div>
+      <h2 class="category-title">Utilidad</h2>
+    </div>
+    
+    <div class="commands-grid">
+      <div class="command-card">
+        <div class="command-header">
+          <div class="command-name">!ping</div>
+          <span class="command-type">Usuario</span>
+        </div>
+        <p class="command-description">Muestra la latencia del bot y la conexión con Discord.</p>
+        <div class="command-usage">!ping</div>
+        <button class="copy-btn">Copiar</button>
+      </div>
+      
+      <div class="command-card">
+        <div class="command-header">
+          <div class="command-name">!avatar</div>
+          <span class="command-type">Usuario</span>
+        </div>
+        <p class="command-description">Muestra el avatar completo de un usuario.</p>
+        <div class="command-usage">!avatar <span class="arg">[@usuario]</span></div>
+        <button class="copy-btn">Copiar</button>
+      </div>
+      
+      <div class="command-card">
+        <div class="command-header">
+          <div class="command-name">!server</div>
+          <span class="command-type">Usuario</span>
+        </div>
+        <p class="command-description">Muestra información detallada sobre el servidor.</p>
+        <div class="command-usage">!server</div>
+        <button class="copy-btn">Copiar</button>
+      </div>
+      
+      <div class="command-card">
+        <div class="command-header">
+          <div class="command-name">!emoji</div>
+          <span class="command-type">Usuario</span>
+        </div>
+        <p class="command-description">Obtiene el enlace CDN de cualquier emoji.</p>
+        <div class="command-usage">!emoji <span class="arg">:emoji:</span></div>
+        <button class="copy-btn">Copiar</button>
+      </div>
+      
+      <div class="command-card">
+        <div class="command-header">
+          <div class="command-name">!prefix</div>
+          <span class="command-type">Admin</span>
+        </div>
+        <p class="command-description">Cambia o muestra el prefijo actual del bot.</p>
+        <div class="command-usage">!prefix <span class="arg">[nuevo-prefijo]</span></div>
+        <button class="copy-btn">Copiar</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🧠 Inteligencia Artificial -->
+  <section class="category-section category-ia" id="ia">
+    <div class="category-header">
+      <div class="category-icon">🤖</div>
+      <h2 class="category-title">Inteligencia Artificial</h2>
+    </div>
+    
+    <div class="commands-grid">
+      <div class="command-card">
+        <div class="command-header">
+          <div class="command-name">!ia</div>
+          <span class="command-type">Usuario</span>
+        </div>
+        <p class="command-description">Interactúa con la inteligencia artificial de Mip impulsada por YLMIA API.</p>
+        <div class="command-usage">!ia <span class="arg">&lt;tu pregunta o prompt&gt;</span></div>
+        <button class="copy-btn">Copiar</button>
+      </div>
+      
+      <div class="command-card">
+        <div class="command-header">
+          <div class="command-name">!traducir</div>
+          <span class="command-type">Usuario</span>
+        </div>
+        <p class="command-description">Traduce texto entre diferentes idiomas.</p>
+        <div class="command-usage">!traducir <span class="arg">&lt;texto&gt;</span></div>
+        <button class="copy-btn">Copiar</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🪄 Extras -->
+  <section class="category-section category-extras" id="extras">
+    <div class="category-header">
+      <div class="category-icon">🪄</div>
+      <h2 class="category-title">Extras</h2>
+    </div>
+    
+    <div class="commands-grid">
+      <div class="command-card">
+        <div class="command-header">
+          <div class="command-name">!hex-decode</div>
+          <span class="command-type">Usuario</span>
+        </div>
+        <p class="command-description">Decodifica texto hexadecimal a texto legible.</p>
+        <div class="command-usage">!hex-decode <span class="arg">&lt;hexadecimal&gt;</span></div>
+        <button class="copy-btn">Copiar</button>
+      </div>
+      
+      <div class="command-card">
+        <div class="command-header">
+          <div class="command-name">!hex-encode</div>
+          <span class="command-type">Usuario</span>
+        </div>
+        <p class="command-description">Convierte texto normal a formato hexadecimal.</p>
+        <div class="command-usage">!hex-encode <span class="arg">&lt;texto&gt;</span></div>
+        <button class="copy-btn">Copiar</button>
+      </div>
+      
+      <div class="command-card">
+        <div class="command-header">
+          <div class="command-name">!operacion</div>
+          <span class="command-type">Usuario</span>
+        </div>
+        <p class="command-description">Calcula el resultado de una operación matemática.</p>
+        <div class="command-usage">!operacion <span class="arg">&lt;operación matemática&gt;</span></div>
+        <button class="copy-btn">Copiar</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 💬 Slash Commands -->
+  <section class="category-section category-slash" id="slash">
+    <div class="category-header">
+      <div class="category-icon">💬</div>
+      <h2 class="category-title">Slash Commands</h2>
+    </div>
+    
+    <div class="commands-grid">
+      <div class="command-card">
+        <div class="command-header">
+          <div class="command-name">/recompensa-nivel</div>
+          <span class="command-type">Admin</span>
+        </div>
+        <p class="command-description">Configura recompensas automáticas al alcanzar ciertos niveles.</p>
+        <div class="command-usage">/recompensa-nivel <span class="arg">nivel rol</span></div>
+        <button class="copy-btn">Copiar</button>
+      </div>
+      
+      <div class="command-card">
+        <div class="command-header">
+          <div class="command-name">/channel-logs</div>
+          <span class="command-type">Admin</span>
+        </div>
+        <p class="command-description">Define el canal donde se enviarán los logs de moderación.</p>
+        <div class="command-usage">/channel-logs <span class="arg">#canal</span></div>
+        <button class="copy-btn">Copiar</button>
+      </div>
+    </div>
+  </section>
 </main>
 
 <footer>
-  <p>©RandomBot | Comandos</p>
+  <p>©Mip | @2025-12-17</p>
 </footer>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Filtro por categorías
+    const categoryButtons = document.querySelectorAll('.category-btn');
+    const categorySections = document.querySelectorAll('.category-section');
+    
+    categoryButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const category = this.dataset.category;
+        
+        // Actualizar botones activos
+        categoryButtons.forEach(btn => btn.classList.remove('active'));
+        this.classList.add('active');
+        
+        // Mostrar/ocultar categorías
+        if (category === 'todos') {
+          categorySections.forEach(section => {
+            section.style.display = 'block';
+            section.style.animation = 'fadeInUp 0.6s ease-out';
+          });
+        } else {
+          categorySections.forEach(section => {
+            if (section.id === category) {
+              section.style.display = 'block';
+              section.style.animation = 'fadeInUp 0.6s ease-out';
+            } else {
+              section.style.display = 'none';
+            }
+          });
+        }
+        
+        // Scroll suave a la categoría
+        if (category !== 'todos') {
+          document.getElementById(category).scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'start' 
+          });
+        }
+      });
+    });
+    
+    // Copiar comandos al hacer clic
+    const copyButtons = document.querySelectorAll('.copy-btn');
+    
+    copyButtons.forEach(button => {
+      button.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const commandCard = this.closest('.command-card');
+        const commandName = commandCard.querySelector('.command-name').textContent;
+        const commandUsage = commandCard.querySelector('.command-usage')?.textContent || commandName;
+        
+        navigator.clipboard.writeText(commandUsage.trim())
+          .then(() => {
+            const originalText = this.textContent;
+            this.textContent = '¡Copiado!';
+            this.style.background = 'rgba(0, 255, 157, 0.3)';
+            
+            setTimeout(() => {
+              this.textContent = originalText;
+              this.style.background = 'rgba(0, 255, 157, 0.1)';
+            }, 2000);
+          })
+          .catch(err => {
+            console.error('Error al copiar: ', err);
+            this.textContent = 'Error';
+            setTimeout(() => {
+              this.textContent = 'Copiar';
+            }, 2000);
+          });
+      });
+    });
+    
+    // Efecto hover en tarjetas de comandos
+    const commandCards = document.querySelectorAll('.command-card');
+    
+    commandCards.forEach(card => {
+      card.addEventListener('click', function() {
+        const commandName = this.querySelector('.command-name').textContent;
+        const commandUsage = this.querySelector('.command-usage')?.textContent || commandName;
+        
+        // Copiar automáticamente al hacer clic en la tarjeta
+        navigator.clipboard.writeText(commandUsage.trim())
+          .then(() => {
+            const copyBtn = this.querySelector('.copy-btn');
+            if (copyBtn) {
+              const originalText = copyBtn.textContent;
+              copyBtn.textContent = '¡Copiado!';
+              copyBtn.style.background = 'rgba(0, 255, 157, 0.3)';
+              
+              setTimeout(() => {
+                copyBtn.textContent = originalText;
+                copyBtn.style.background = 'rgba(0, 255, 157, 0.1)';
+              }, 2000);
+            }
+          });
+      });
+    });
+    
+    // Animación de entrada para las tarjetas
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+    
+    commandCards.forEach(card => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(20px)';
+      card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(card);
+    });
+  });
+</script>
 </body>
 </html>
